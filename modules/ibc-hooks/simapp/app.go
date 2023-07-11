@@ -734,6 +734,7 @@ func NewSimApp(
 		app.BankKeeper,
 		app.StakingKeeper,
 		distrkeeper.NewQuerier(app.DistrKeeper),
+		app.IBCFeeKeeper,
 		app.IBCKeeper.ChannelKeeper,
 		&app.IBCKeeper.PortKeeper,
 		app.CapabilityKeeper.ScopeToModule(wasm.ModuleName),
