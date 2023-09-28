@@ -145,7 +145,8 @@ func (im IBCMiddleware) OnRecvPacket(
 ) ibcexported.Acknowledgement {
 	var data transfertypes.FungibleTokenPacketData
 	if err := transfertypes.ModuleCdc.UnmarshalJSON(packet.GetData(), &data); err != nil {
-		return channeltypes.NewErrorAcknowledgement(err)
+		im.keeper.Logger(ctx).Debug(fmt.Sprintf("packetForwardMiddleware OnRecvPacket payload is not a FungibleTokenPacketData: %s", err.Error()))
+		return im.app.OnRecvPacket(ctx, packet, relayer)
 	}
 
 	im.keeper.Logger(ctx).Debug("packetForwardMiddleware OnRecvPacket",
